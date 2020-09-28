@@ -14,9 +14,6 @@
     </parent>  
     
     <properties>
-        <java.version>11</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <springfox-version>2.9.2</springfox-version>
         <gson-fire-version>1.8.3</gson-fire-version>
         <swagger-core-version>1.6.0</swagger-core-version>
