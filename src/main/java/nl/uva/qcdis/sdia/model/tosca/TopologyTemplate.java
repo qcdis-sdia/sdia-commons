@@ -50,16 +50,36 @@ public class TopologyTemplate {
     @Valid
     private List<Map<String, Object>> policies = null;
 
+    @JsonProperty("workflows")
+    @Valid
+    private Map<String, Object> workflows = null;
+
     public TopologyTemplate description(String description) {
         this.description = description;
         return this;
     }
 
     /**
+     * Get workflows
+     *
+     * @return this.workflows
+     *
+     */
+    @ApiModelProperty(value = "")
+
+    public Map<String, Object> getWorkflows() {
+        return this.workflows;
+    }
+
+    public void setWorkflows(Map<String, Object> workflows) {
+        this.workflows = workflows;
+    }
+
+    /**
      * Get description
      *
      * @return description
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -88,7 +108,7 @@ public class TopologyTemplate {
      * Get inputs
      *
      * @return inputs
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -117,7 +137,7 @@ public class TopologyTemplate {
      * Get nodeTemplates
      *
      * @return nodeTemplates
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -148,7 +168,7 @@ public class TopologyTemplate {
      * Get relationshipTemplates
      *
      * @return relationshipTemplates
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -177,7 +197,7 @@ public class TopologyTemplate {
      * Get outputs
      *
      * @return outputs
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -206,7 +226,7 @@ public class TopologyTemplate {
      * Get groups
      *
      * @return groups
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -235,7 +255,7 @@ public class TopologyTemplate {
      * Get substitutionMappings
      *
      * @return substitutionMappings
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -264,7 +284,7 @@ public class TopologyTemplate {
      * Get policies
      *
      * @return policies
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -294,12 +314,13 @@ public class TopologyTemplate {
                 && Objects.equals(this.outputs, topologyTemplate.outputs)
                 && Objects.equals(this.groups, topologyTemplate.groups)
                 && Objects.equals(this.substitutionMappings, topologyTemplate.substitutionMappings)
+                && Objects.equals(this.workflows, topologyTemplate.workflows)
                 && Objects.equals(this.policies, topologyTemplate.policies);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, inputs, nodeTemplates, relationshipTemplates, outputs, groups, substitutionMappings, policies);
+        return Objects.hash(description, inputs, nodeTemplates, relationshipTemplates, outputs, groups, substitutionMappings, policies, workflows);
     }
 
     @Override
@@ -315,6 +336,7 @@ public class TopologyTemplate {
         sb.append("    groups: ").append(toIndentedString(groups)).append("\n");
         sb.append("    substitutionMappings: ").append(toIndentedString(substitutionMappings)).append("\n");
         sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
+        sb.append("    workflows: ").append(toIndentedString(workflows)).append("\n");
         sb.append("}");
         return sb.toString();
     }
