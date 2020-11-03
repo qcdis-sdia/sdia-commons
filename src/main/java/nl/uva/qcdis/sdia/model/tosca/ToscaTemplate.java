@@ -104,6 +104,9 @@ public class ToscaTemplate {
     @Valid
     private Map<String, Object> repositories = null;
 
+    @JsonProperty("workflows")
+    private Map<String, Object> workflows = null;
+
     public ToscaTemplate toscaDefinitionsVersion(String toscaDefinitionsVersion) {
         this.toscaDefinitionsVersion = toscaDefinitionsVersion;
         return this;
@@ -149,6 +152,21 @@ public class ToscaTemplate {
     public ToscaTemplate templateName(String templateName) {
         this.templateName = templateName;
         return this;
+    }
+
+    /**
+     * Get workflows
+     *
+     * @return workflows
+     *
+     */
+    @ApiModelProperty(value = "")
+    public Map<String, Object> getWorkflows() {
+        return workflows;
+    }
+
+    public void setWorkflows(Map<String, Object> workflows) {
+        this.workflows = workflows;
     }
 
     /**

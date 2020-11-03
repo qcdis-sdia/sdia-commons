@@ -59,8 +59,6 @@ public class NodeTemplate {
     @Valid
     private Map<String, Object> artifacts = null;
 
-    @JsonProperty("workflows")
-    private Map<String, Object> workflows = null;
 
     public NodeTemplate derivedFrom(String derivedFrom) {
         this.derivedFrom = derivedFrom;
@@ -314,20 +312,7 @@ public class NodeTemplate {
         return this;
     }
 
-    /**
-     * Get workflows
-     *
-     * @return workflows
-     *
-     */
-    @ApiModelProperty(value = "")
-    public Map<String, Object> getWorkflows() {
-        return workflows;
-    }
 
-    public void setWorkflows(Map<String, Object> workflows) {
-        this.workflows = workflows;
-    }
 
     /**
      * Get artifacts
