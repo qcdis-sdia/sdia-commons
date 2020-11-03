@@ -59,6 +59,9 @@ public class NodeTemplate {
     @Valid
     private Map<String, Object> artifacts = null;
 
+    @JsonProperty("workflows")
+    private Map<String, Object> workflows = null;
+
     public NodeTemplate derivedFrom(String derivedFrom) {
         this.derivedFrom = derivedFrom;
         return this;
@@ -68,7 +71,7 @@ public class NodeTemplate {
      * Get derivedFrom
      *
      * @return derivedFrom
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -97,7 +100,7 @@ public class NodeTemplate {
      * Get properties
      *
      * @return properties
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -126,7 +129,7 @@ public class NodeTemplate {
      * Get requirements
      *
      * @return requirements
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -157,7 +160,7 @@ public class NodeTemplate {
      * Get interfaces
      *
      * @return interfaces
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -186,7 +189,7 @@ public class NodeTemplate {
      * Get capabilities
      *
      * @return capabilities
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -207,7 +210,7 @@ public class NodeTemplate {
      * Get type
      *
      * @return type
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -228,7 +231,7 @@ public class NodeTemplate {
      * Get description
      *
      * @return description
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -257,7 +260,7 @@ public class NodeTemplate {
      * Get directives
      *
      * @return directives
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -286,7 +289,7 @@ public class NodeTemplate {
      * Get attributes
      *
      * @return attributes
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -312,13 +315,27 @@ public class NodeTemplate {
     }
 
     /**
+     * Get workflows
+     *
+     * @return workflows
+     *
+     */
+    @ApiModelProperty(value = "")
+    public Map<String, Object> getWorkflows() {
+        return workflows;
+    }
+
+    public void setWorkflows(Map<String, Object> workflows) {
+        this.workflows = workflows;
+    }
+
+    /**
      * Get artifacts
      *
      * @return artifacts
-  *
+     *
      */
     @ApiModelProperty(value = "")
-
     public Map<String, Object> getArtifacts() {
         return artifacts;
     }
