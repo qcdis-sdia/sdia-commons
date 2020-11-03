@@ -104,9 +104,6 @@ public class ToscaTemplate {
     @Valid
     private Map<String, Object> repositories = null;
 
-    @JsonProperty("workflows")
-    private Map<String, Object> workflows = null;
-
     public ToscaTemplate toscaDefinitionsVersion(String toscaDefinitionsVersion) {
         this.toscaDefinitionsVersion = toscaDefinitionsVersion;
         return this;
@@ -152,21 +149,6 @@ public class ToscaTemplate {
     public ToscaTemplate templateName(String templateName) {
         this.templateName = templateName;
         return this;
-    }
-
-    /**
-     * Get workflows
-     *
-     * @return workflows
-     *
-     */
-    @ApiModelProperty(value = "")
-    public Map<String, Object> getWorkflows() {
-        return workflows;
-    }
-
-    public void setWorkflows(Map<String, Object> workflows) {
-        this.workflows = workflows;
     }
 
     /**
@@ -278,7 +260,7 @@ public class ToscaTemplate {
 
     public ToscaTemplate addImportsItem(Map<String, Object> importsItem) {
         if (this.imports == null) {
-            this.imports = new ArrayList<Map<String, Object>>();
+            this.imports = new ArrayList<>();
         }
         this.imports.add(importsItem);
         return this;
@@ -599,7 +581,7 @@ public class ToscaTemplate {
 
     public ToscaTemplate putRepositoriesItem(String key, Object repositoriesItem) {
         if (this.repositories == null) {
-            this.repositories = new HashMap<String, Object>();
+            this.repositories = new HashMap<>();
         }
         this.repositories.put(key, repositoriesItem);
         return this;
@@ -620,6 +602,10 @@ public class ToscaTemplate {
     public void setRepositories(Map<String, Object> repositories) {
         this.repositories = repositories;
     }
+
+
+
+
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -648,6 +634,7 @@ public class ToscaTemplate {
                 && Objects.equals(this.interfaceTypes, toscaTemplate.interfaceTypes)
                 && Objects.equals(this.policyTypes, toscaTemplate.policyTypes)
                 && Objects.equals(this.groupTypes, toscaTemplate.groupTypes)
+                
                 && Objects.equals(this.repositories, toscaTemplate.repositories);
     }
 
