@@ -1,5 +1,6 @@
 package nl.uva.qcdis.sdia.model.cloud.storm;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +14,7 @@ import javax.validation.Valid;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-31T12:57:31.148Z")
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Credential {
 
     @JsonProperty("protocol")

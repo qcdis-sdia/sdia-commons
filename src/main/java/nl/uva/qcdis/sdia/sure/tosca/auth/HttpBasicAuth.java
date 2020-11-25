@@ -20,7 +20,6 @@ import com.squareup.okhttp.Credentials;
 import java.util.Map;
 import java.util.List;
 
-import java.io.UnsupportedEncodingException;
 import nl.uva.qcdis.sdia.sure.tosca.client.Pair;
 
 public class HttpBasicAuth implements Authentication {

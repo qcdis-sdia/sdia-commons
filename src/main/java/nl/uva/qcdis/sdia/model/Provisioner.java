@@ -1,5 +1,6 @@
 package nl.uva.qcdis.sdia.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-26T15:03:16.208Z")
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Provisioner {
 
     @JsonProperty("name")
