@@ -11,6 +11,7 @@
  */
 package nl.uva.qcdis.sdia.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,6 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
  * NodeTemplateMap
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-12-20T15:53:11.510Z")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NodeTemplateMap {
 
     @SerializedName("name")
