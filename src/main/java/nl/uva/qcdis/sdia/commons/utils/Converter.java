@@ -119,8 +119,7 @@ public class Converter {
     }
 
     public static void zipFolder(String sourceFolder, String zipFolder) throws FileNotFoundException, IOException {
-        try (FileOutputStream fos = new FileOutputStream(zipFolder);
-                ZipOutputStream zos = new ZipOutputStream(fos)) {
+        try ( FileOutputStream fos = new FileOutputStream(zipFolder);  ZipOutputStream zos = new ZipOutputStream(fos)) {
             Path sourcePath = Paths.get(sourceFolder);
             Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
                 @Override
@@ -144,7 +143,7 @@ public class Converter {
     }
 
     public static void unzipFolder(String zipFile, String uncompressedDirectory) throws IOException {
-        try (ZipFile zipfile = new ZipFile(zipFile)) {
+        try ( ZipFile zipfile = new ZipFile(zipFile)) {
             FileSystem fileSystem = FileSystems.getDefault();
             Enumeration<? extends ZipEntry> zipEntries = zipfile.entries();
 
@@ -158,7 +157,7 @@ public class Converter {
                     String uncompressedFileName = uncompressedDirectory + File.separator + entry.getName();
                     Path uncompressedFilePath = fileSystem.getPath(uncompressedFileName);
                     Files.createFile(uncompressedFilePath);
-                    try (FileOutputStream fileOutput = new FileOutputStream(uncompressedFileName)) {
+                    try ( FileOutputStream fileOutput = new FileOutputStream(uncompressedFileName)) {
                         while (bis.available() > 0) {
                             fileOutput.write(bis.read());
                         }
@@ -196,11 +195,13 @@ public class Converter {
     public static Credential encryptCredential(Credential credential, String credentialSecret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 
         Map<String, String> credKeys = credential.getKeys();
-        Set<String> keySet = credKeys.keySet();
-        for (String key : keySet) {
-            String credKey = credKeys.get(key);
-            if (credKey != null) {
-                credKeys.put(key, encryptString(credKey, credentialSecret));
+        if (credKeys != null) {
+            Set<String> keySet = credKeys.keySet();
+            for (String key : keySet) {
+                String credKey = credKeys.get(key);
+                if (credKey != null) {
+                    credKeys.put(key, encryptString(credKey, credentialSecret));
+                }
             }
         }
         String token = credential.getToken();
