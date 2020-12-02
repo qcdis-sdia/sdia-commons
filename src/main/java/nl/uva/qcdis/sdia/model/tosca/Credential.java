@@ -150,7 +150,7 @@ public class Credential {
         return this;
     }
 
-    public Credential osIdentityProvider(String identityProvider) {
+    public Credential identityProvider(String identityProvider) {
         this.identityProvider = identityProvider;
         return this;
     }
@@ -158,14 +158,14 @@ public class Credential {
     /**
      * example egi.eu
      *
-     * @return osIdentityProvider
+     * @return identityProvider
      *
      */
-    public String getOsIdentityProvider() {
+    public String getIdentityProvider() {
         return identityProvider;
     }
 
-    public void setOsIdentityProvider(String identityProvider) {
+    public void setIdentityProvider(String identityProvider) {
         this.identityProvider = identityProvider;
     }
 
