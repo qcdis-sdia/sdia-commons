@@ -18,6 +18,7 @@ import org.springframework.data.annotation.Id;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-10T15:39:04.296Z")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Credential {
+
     /**
      * @return the id
      */
@@ -36,7 +37,6 @@ public class Credential {
     @JsonIgnore
     private String id;
 
-    
     @JsonProperty("protocol")
     private String protocol = null;
 
@@ -56,6 +56,15 @@ public class Credential {
     @JsonProperty("cloud_provider_name")
     private String cloudProviderName = null;
 
+    @JsonProperty("auth_url")
+    private String authUrl = null;
+
+    @JsonProperty("project_id")
+    private String projectId = null;
+
+    @JsonProperty("identity_provider")
+    private String identityProvider = null;
+
     public Credential protocol(String protocol) {
         this.protocol = protocol;
         return this;
@@ -65,7 +74,7 @@ public class Credential {
      * Get protocol
      *
      * @return protocol
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -77,6 +86,44 @@ public class Credential {
         this.protocol = protocol;
     }
 
+    public Credential authUrl(String authUrl) {
+        this.authUrl = authUrl;
+        return this;
+    }
+
+    /**
+     * the Keystone url. example https://stack-server.ct.infn.it:35357/v3
+     *
+     * @return authUrl
+     *
+     */
+    public String getAuthUrl() {
+        return authUrl;
+    }
+
+    public void setAuthUrl(String authUrl) {
+        this.authUrl = authUrl;
+    }
+
+    public Credential projectId(String projectId) {
+        this.projectId = projectId;
+        return this;
+    }
+
+    /**
+     * the project example 745695ccd17042fabf96d2410a4278d9
+     *
+     * @return projectId
+     *
+     */
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setOsProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
     public Credential tokenType(String tokenType) {
         this.tokenType = tokenType;
         return this;
@@ -86,7 +133,7 @@ public class Credential {
      * Get tokenType
      *
      * @return tokenType
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -103,11 +150,30 @@ public class Credential {
         return this;
     }
 
+    public Credential osIdentityProvider(String identityProvider) {
+        this.identityProvider = identityProvider;
+        return this;
+    }
+
+    /**
+     * example egi.eu
+     *
+     * @return osIdentityProvider
+     *
+     */
+    public String getOsIdentityProvider() {
+        return identityProvider;
+    }
+
+    public void setOsIdentityProvider(String identityProvider) {
+        this.identityProvider = identityProvider;
+    }
+
     /**
      * Get token
      *
      * @return token
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -126,7 +192,7 @@ public class Credential {
 
     public Credential putKeysItem(String key, String keysItem) {
         if (this.keys == null) {
-            this.keys = new HashMap<String, String>();
+            this.keys = new HashMap<>();
         }
         this.keys.put(key, keysItem);
         return this;
@@ -136,7 +202,7 @@ public class Credential {
      * Get keys
      *
      * @return keys
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -157,7 +223,7 @@ public class Credential {
      * Get user
      *
      * @return user
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -178,7 +244,7 @@ public class Credential {
      * Get cloudProviderName
      *
      * @return cloudProviderName
-  *
+     *
      */
     @ApiModelProperty(value = "")
 
@@ -204,12 +270,16 @@ public class Credential {
                 && Objects.equals(this.token, credentials.token)
                 && Objects.equals(this.keys, credentials.keys)
                 && Objects.equals(this.user, credentials.user)
+                && Objects.equals(this.identityProvider, credentials.identityProvider)
+                && Objects.equals(this.projectId, credentials.projectId)
+                && Objects.equals(this.authUrl, credentials.authUrl)
                 && Objects.equals(this.cloudProviderName, credentials.cloudProviderName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(protocol, tokenType, token, keys, user, cloudProviderName);
+        return Objects.hash(protocol, tokenType, token, keys, user, cloudProviderName,
+                 authUrl, projectId, identityProvider);
     }
 
     @Override
@@ -222,7 +292,10 @@ public class Credential {
         sb.append("    token: ").append(toIndentedString(token)).append("\n");
         sb.append("    keys: ").append(toIndentedString(keys)).append("\n");
         sb.append("    user: ").append(toIndentedString(user)).append("\n");
+        sb.append("    identityProvider: ").append(toIndentedString(identityProvider)).append("\n");
+        sb.append("    osProjectId: ").append(toIndentedString(projectId)).append("\n");
         sb.append("    cloudProviderName: ").append(toIndentedString(cloudProviderName)).append("\n");
+        sb.append("    osAuthUrl: ").append(toIndentedString(authUrl)).append("\n");
         sb.append("}");
         return sb.toString();
     }
