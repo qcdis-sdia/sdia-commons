@@ -245,8 +245,16 @@ public class ToscaHelper {
             Map<String, Object> att = vmTopology.getAttributes();
             if (att == null) {
                 att = new HashMap<>();
+                ArrayList<Credential> credentials = new ArrayList<>();
+                att.put("credentials", credentials);
             }
-            att.put("credential", credential);
+            
+            ArrayList<Credential> credentials = (ArrayList<Credential>) att.get("credentials");
+            if (credentials==null){
+                credentials = new ArrayList<>();
+            }
+            credentials.add(credential);
+            att.put("credentials", credentials);
             vmTopology.setAttributes(att);
             vmTopologyMap.setNodeTemplate(vmTopology);
             return vmTopologyMap;
@@ -255,13 +263,12 @@ public class ToscaHelper {
         }
     }
 
-    public Credential getCredentialsFromVMTopology(NodeTemplateMap vmTopologyMap) throws Exception {
+    public List<Credential> getCredentialsFromVMTopology(NodeTemplateMap vmTopologyMap) throws Exception {
         NodeTemplate vmTopology = vmTopologyMap.getNodeTemplate();
         if (vmTopology.getType().equals(VM_TOPOLOGY)) {
             Map<String, Object> att = vmTopology.getAttributes();
-            String ymlStr = Converter.map2YmlString((Map<String, Object>) att.get("credential"));
-            Credential toscaCredential = objectMapper.readValue(ymlStr, Credential.class);
-            return toscaCredential;
+            List<Credential> toscaCredentials= (List<Credential>) att.get("credentials");
+            return toscaCredentials;
 
         } else {
             throw new TypeExeption("NodeTemplate is not of type: " + VM_TOPOLOGY + " it is of type: " + vmTopology.getType());
