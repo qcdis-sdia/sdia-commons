@@ -346,7 +346,7 @@ public class ToscaHelperTest {
     }
 
     /**
-     * Test of getVMNOS method, of class ToscaHelper.
+     * Test of getVMNOSDistro method, of class ToscaHelper.
      */
     @Test
     public void testGetVMNOS() throws Exception {
@@ -357,7 +357,7 @@ public class ToscaHelperTest {
             for (NodeTemplateMap nodeTemplateMap : vmTopologyTemplatesMap) {
                 List<NodeTemplateMap> vmTemplatesMap = instance.getTemplateVMsForVMTopology(nodeTemplateMap);
                 for (NodeTemplateMap vmMap : vmTemplatesMap) {
-                    String result = instance.getVMNOS(vmMap);
+                    String result = instance.getVMNOSDistro(vmMap);
                     assertNotNull(result);
                 }
             }

@@ -26,7 +26,8 @@ public class Constants {
     public static final String VM_NUM_OF_CORES = "num_cores";
     public static final String MEM_SIZE = "mem_size";
     public static final String DISK_SIZE = "disk_size";
-    public static final String VM_OS = "os";
+    public static final String VM_OS_DISTRO = "os_distro";
+    public static final String VM_OS_VERSION = "os_version";
     public static final String VM_TOPOLOGY = "tosca.nodes.QC.VM.topology";
     public static final String APPLICATION_TYPE = "tosca.nodes.QC.Application";
     public static final String CLOUD_STORM_INTERFACE = "tosca.interfaces.QC.CloudsStorm";

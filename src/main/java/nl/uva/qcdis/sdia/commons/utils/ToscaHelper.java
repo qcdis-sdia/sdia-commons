@@ -199,15 +199,25 @@ public class ToscaHelper {
 
     }
 
-    public String getVMNOS(NodeTemplateMap vmMap) throws Exception {
+    public String getVMNOSDistro(NodeTemplateMap vmMap) throws Exception {
         NodeTemplate vm = vmMap.getNodeTemplate();
         if (vm.getType().equals(VM_TYPE)) {
-            return (String) vm.getProperties().get(VM_OS);
+            return (String) vm.getProperties().get(VM_OS_DISTRO);
         } else {
             throw new Exception("NodeTemplate is not of type: " + VM_TYPE + " it is of type: " + vm.getType());
         }
     }
 
+    
+        public String getVMNOSVersion(NodeTemplateMap vmMap) throws Exception {
+        NodeTemplate vm = vmMap.getNodeTemplate();
+        if (vm.getType().equals(VM_TYPE)) {
+            return (String) vm.getProperties().get(VM_OS_VERSION);
+        } else {
+            throw new Exception("NodeTemplate is not of type: " + VM_TYPE + " it is of type: " + vm.getType());
+        }
+    }
+        
     private Double convertToGB(Integer value, String memUnit) {
         switch (memUnit) {
             case "GB":
@@ -389,6 +399,9 @@ public class ToscaHelper {
                 return null;
         }
     }
+    
+    
+    
 
     public static StatusEnum nodeCurrentState2CloudStormStatus(NODE_STATES currentState) {
         if (currentState == null) {
@@ -426,5 +439,7 @@ public class ToscaHelper {
         }
         return null;
     }
+    
+
 
 }
