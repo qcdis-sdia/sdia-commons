@@ -277,7 +277,12 @@ public class ToscaHelper {
         NodeTemplate vmTopology = vmTopologyMap.getNodeTemplate();
         if (vmTopology.getType().equals(VM_TOPOLOGY)) {
             Map<String, Object> att = vmTopology.getAttributes();
-            List<Credential> toscaCredentials= (List<Credential>) att.get("credentials");
+            List<Credential> toscaCredentials = new ArrayList<>();
+            List<Map<String, Object>> mapCredentials = (List<Map<String, Object>>) att.get("credentials");
+            for(Map<String, Object> mapCredential : mapCredentials){
+                Credential credential = objectMapper.readValue(Converter.map2YmlString(mapCredential), Credential.class);
+                toscaCredentials.add(credential);                 
+            }
             return toscaCredentials;
 
         } else {

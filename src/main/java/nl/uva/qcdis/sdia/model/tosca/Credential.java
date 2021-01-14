@@ -32,7 +32,7 @@ public class Credential {
     public void setId(String id) {
         this.id = id;
     }
-
+  
     @Id
     @JsonIgnore
     private String id;
@@ -64,6 +64,10 @@ public class Credential {
 
     @JsonProperty("identity_provider")
     private String identityProvider = null;
+    
+    @JsonProperty("auth_type")
+    private String authType = null;
+    
 
     public Credential protocol(String protocol) {
         this.protocol = protocol;
@@ -150,7 +154,26 @@ public class Credential {
         return this;
     }
 
-    public Credential identityProvider(String identityProvider) {
+    public Credential authType(String authType) {
+        this.authType = authType;
+        return this;
+    }
+
+    /**
+     * example egi.eu
+     *
+     * @return authType
+     *
+     */
+    public String getAuthType() {
+        return authType;
+    }
+
+    public void setAuthType(String authType) {
+        this.authType = authType;
+    }
+
+      public Credential identityProvider(String identityProvider) {
         this.identityProvider = identityProvider;
         return this;
     }
@@ -169,6 +192,7 @@ public class Credential {
         this.identityProvider = identityProvider;
     }
 
+    
     /**
      * Get token
      *
@@ -271,6 +295,7 @@ public class Credential {
                 && Objects.equals(this.keys, credentials.keys)
                 && Objects.equals(this.user, credentials.user)
                 && Objects.equals(this.identityProvider, credentials.identityProvider)
+                && Objects.equals(this.authType, credentials.authType)
                 && Objects.equals(this.projectId, credentials.projectId)
                 && Objects.equals(this.authUrl, credentials.authUrl)
                 && Objects.equals(this.cloudProviderName, credentials.cloudProviderName);
@@ -279,7 +304,7 @@ public class Credential {
     @Override
     public int hashCode() {
         return Objects.hash(protocol, tokenType, token, keys, user, cloudProviderName,
-                 authUrl, projectId, identityProvider);
+                 authUrl, projectId, identityProvider,authType);
     }
 
     @Override
@@ -293,6 +318,7 @@ public class Credential {
         sb.append("    keys: ").append(toIndentedString(keys)).append("\n");
         sb.append("    user: ").append(toIndentedString(user)).append("\n");
         sb.append("    identityProvider: ").append(toIndentedString(identityProvider)).append("\n");
+        sb.append("    authType: ").append(toIndentedString(authType)).append("\n");
         sb.append("    osProjectId: ").append(toIndentedString(projectId)).append("\n");
         sb.append("    cloudProviderName: ").append(toIndentedString(cloudProviderName)).append("\n");
         sb.append("    osAuthUrl: ").append(toIndentedString(authUrl)).append("\n");
