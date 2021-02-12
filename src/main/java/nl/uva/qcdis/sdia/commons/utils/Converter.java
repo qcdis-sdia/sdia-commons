@@ -21,6 +21,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import com.macasaet.fernet.Key;
+import com.macasaet.fernet.StringValidator;
+import com.macasaet.fernet.Token;
+import com.macasaet.fernet.Validator;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,6 +41,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -54,6 +59,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import nl.uva.qcdis.sdia.model.tosca.Credential;
 import nl.uva.qcdis.sdia.model.tosca.ToscaTemplate;
@@ -67,6 +73,8 @@ import org.yaml.snakeyaml.Yaml;
  * @author S. Koulouzis
  */
 public class Converter {
+
+    private static final String ivs = "zK2hzBvP%FRJ5%lD";
 
     public static String map2YmlString(Map<String, Object> map) throws JSONException {
         JSONObject jsonObject = new JSONObject(map);
@@ -173,32 +181,33 @@ public class Converter {
         }
     }
 
-    public static String decryptString(String contents, String secret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        SecretKeySpec secretKey = getsecretKey(secret);
-        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-        cipher.init(Cipher.DECRYPT_MODE, secretKey);
-        return new String(cipher.doFinal(Base64.getDecoder().decode(contents)));
-
+    public static String encryptString(String contents, String secret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        Key key = new Key(secret);
+        Token token = Token.generate(key, contents);
+        return token.serialise();
     }
+    
+    
 
-    public static String encryptString(String contents, String secret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        SecretKeySpec secretKey = getsecretKey(secret);
-        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        return Base64.getEncoder().encodeToString(cipher.doFinal(contents.getBytes("UTF-8")));
+    public static String decryptString(String contents, String secret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
+        Key key = new Key(secret);
+        Token token = Token.fromString(contents);
+        Validator<String> validator = new StringValidator() {
+        };
+        return token.validateAndDecrypt(key, validator);
     }
 
     private static SecretKeySpec getsecretKey(String myKey) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        MessageDigest sha;
-
-        byte[] key = myKey.getBytes("UTF-8");
-        sha = MessageDigest.getInstance("SHA-1");
-        key = sha.digest(key);
-        key = Arrays.copyOf(key, 16);
-        return new SecretKeySpec(key, "AES");
+        byte[] arrBTmp = myKey.getBytes();
+        byte[] arrB = new byte[16];
+        for (int i = 0; i < arrBTmp.length && i < arrB.length; i++) {
+            arrB[i] = arrBTmp[i];
+        }
+        SecretKeySpec skeySpec = new SecretKeySpec(arrB, "AES");
+        return skeySpec;
     }
 
-    public static Credential encryptCredential(Credential credential, String credentialSecret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public static Credential encryptCredential(Credential credential, String credentialSecret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
 
         Map<String, String> credKeys = credential.getKeys();
         if (credKeys != null) {
@@ -217,7 +226,7 @@ public class Converter {
         return credential;
     }
 
-    public static Credential dencryptCredential(Credential credential, String credentialSecret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public static Credential dencryptCredential(Credential credential, String credentialSecret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
         Map<String, String> credKeys = credential.getKeys();
         Set<String> keySet = credKeys.keySet();
         for (String key : keySet) {
@@ -233,8 +242,7 @@ public class Converter {
         return credential;
     }
 
-
-    public static String toYAML(ToscaTemplate toscaTemplate) throws JsonProcessingException{
+    public static String toYAML(ToscaTemplate toscaTemplate) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER));
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

@@ -15,6 +15,7 @@
  */
 package nl.uva.qcdis.sdia.commons.utils;
 
+import com.macasaet.fernet.Key;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -54,7 +55,7 @@ public class ConverterTest {
     public void testEncryptDecryptString() throws Exception {
         System.out.println("decryptString");
         String contents = "this is very important information";
-        String secret = "top_secret";
+        String secret = Key.generateKey().serialise();
         String expResult = contents;
         String enc = Converter.encryptString(contents, secret);
         System.out.println("Encrypted String: " + enc);
