@@ -45,7 +45,8 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.time.Duration;
+import java.time.temporal.TemporalAmount;
 import java.util.Base64;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -56,16 +57,15 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import nl.uva.qcdis.sdia.model.tosca.Credential;
 import nl.uva.qcdis.sdia.model.tosca.ToscaTemplate;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
+import org.threeten.bp.Instant;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -186,14 +186,21 @@ public class Converter {
         Token token = Token.generate(key, contents);
         return token.serialise();
     }
-    
-    
 
     public static String decryptString(String contents, String secret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
         Key key = new Key(secret);
         Token token = Token.fromString(contents);
-        Validator<String> validator = new StringValidator() {
+//        Validator<String> validator = new StringValidator() {
+//            
+//        };
+//        
+        final Validator<String> validator = new StringValidator() {
+            @Override
+            public TemporalAmount getTimeToLive() {
+                return Duration.ofDays(Integer.MAX_VALUE);
+            }
         };
+
         return token.validateAndDecrypt(key, validator);
     }
 

@@ -50,12 +50,13 @@ public class ConverterTest {
 
     /**
      * Test of decryptString method, of class Converter.
+     * @throws java.lang.Exception
      */
     @Test
     public void testEncryptDecryptString() throws Exception {
         System.out.println("decryptString");
         String contents = "this is very important information";
-        String secret = Key.generateKey().serialise();
+        String secret = "2vSfzOCCIj6__YYWiJDaY1n0CcwUCsPIDJVTkILDhc93JgYrYhUrqSAFNDdnB9XlwJgqEzLbxFU_YZ2PBwKX2Q==";//Key.generateKey().serialise();
         String expResult = contents;
         String enc = Converter.encryptString(contents, secret);
         System.out.println("Encrypted String: " + enc);
