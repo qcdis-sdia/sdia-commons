@@ -199,15 +199,25 @@ public class ToscaHelper {
 
     }
 
-    public String getVMNOS(NodeTemplateMap vmMap) throws Exception {
+    public String getVMNOSDistro(NodeTemplateMap vmMap) throws Exception {
         NodeTemplate vm = vmMap.getNodeTemplate();
         if (vm.getType().equals(VM_TYPE)) {
-            return (String) vm.getProperties().get(VM_OS);
+            return (String) vm.getProperties().get(VM_OS_DISTRO);
         } else {
             throw new Exception("NodeTemplate is not of type: " + VM_TYPE + " it is of type: " + vm.getType());
         }
     }
 
+    
+        public String getVMNOSVersion(NodeTemplateMap vmMap) throws Exception {
+        NodeTemplate vm = vmMap.getNodeTemplate();
+        if (vm.getType().equals(VM_TYPE)) {
+            return (String) vm.getProperties().get(VM_OS_VERSION);
+        } else {
+            throw new Exception("NodeTemplate is not of type: " + VM_TYPE + " it is of type: " + vm.getType());
+        }
+    }
+        
     private Double convertToGB(Integer value, String memUnit) {
         switch (memUnit) {
             case "GB":
@@ -267,7 +277,12 @@ public class ToscaHelper {
         NodeTemplate vmTopology = vmTopologyMap.getNodeTemplate();
         if (vmTopology.getType().equals(VM_TOPOLOGY)) {
             Map<String, Object> att = vmTopology.getAttributes();
-            List<Credential> toscaCredentials= (List<Credential>) att.get("credentials");
+            List<Credential> toscaCredentials = new ArrayList<>();
+            List<Map<String, Object>> mapCredentials = (List<Map<String, Object>>) att.get("credentials");
+            for(Map<String, Object> mapCredential : mapCredentials){
+                Credential credential = objectMapper.readValue(Converter.map2YmlString(mapCredential), Credential.class);
+                toscaCredentials.add(credential);                 
+            }
             return toscaCredentials;
 
         } else {
@@ -389,6 +404,9 @@ public class ToscaHelper {
                 return null;
         }
     }
+    
+    
+    
 
     public static StatusEnum nodeCurrentState2CloudStormStatus(NODE_STATES currentState) {
         if (currentState == null) {
@@ -426,5 +444,7 @@ public class ToscaHelper {
         }
         return null;
     }
+    
+
 
 }

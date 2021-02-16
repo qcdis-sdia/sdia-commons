@@ -79,7 +79,7 @@ public class ToscaHelperTest {
         File file = File.createTempFile("application_example_2_topologies", ".yaml");
         file.deleteOnExit();
         FileUtils.copyURLToFile(
-                new URL("https://raw.githubusercontent.com/QCDIS/sdia-tosca/master/examples/application_example_2_topologies.yaml"),
+                new URL("https://raw.githubusercontent.com/qcdis-sdia/sdia-tosca/master/examples/application_example_2_topologies.yaml"),
                 file);
 
         byte[] bytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
@@ -91,7 +91,7 @@ public class ToscaHelperTest {
         file = File.createTempFile("application_example_provisioned", ".yaml");
         file.deleteOnExit();
         FileUtils.copyURLToFile(
-                new URL("https://raw.githubusercontent.com/QCDIS/sdia-tosca/master/examples/application_example_provisioned.yaml"),
+                new URL("https://raw.githubusercontent.com/qcdis-sdia/sdia-tosca/master/examples/application_example_provisioned.yaml"),
                 file);
 
         bytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
@@ -346,7 +346,8 @@ public class ToscaHelperTest {
     }
 
     /**
-     * Test of getVMNOS method, of class ToscaHelper.
+     * Test of getVMNOSDistro method, of class ToscaHelper.
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetVMNOS() throws Exception {
@@ -357,7 +358,7 @@ public class ToscaHelperTest {
             for (NodeTemplateMap nodeTemplateMap : vmTopologyTemplatesMap) {
                 List<NodeTemplateMap> vmTemplatesMap = instance.getTemplateVMsForVMTopology(nodeTemplateMap);
                 for (NodeTemplateMap vmMap : vmTemplatesMap) {
-                    String result = instance.getVMNOS(vmMap);
+                    String result = instance.getVMNOSDistro(vmMap);
                     assertNotNull(result);
                 }
             }

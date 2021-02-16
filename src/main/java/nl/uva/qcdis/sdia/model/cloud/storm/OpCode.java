@@ -32,7 +32,7 @@ public class OpCode {
         START("start"),
         STOP("stop");
 
-        private String value;
+        private final String value;
 
         OperationEnum(String value) {
             this.value = value;
@@ -66,7 +66,7 @@ public class OpCode {
         VM("VM"),
         REQ("REQ");
 
-        private String value;
+        private final String value;
 
         ObjectTypeEnum(String value) {
             this.value = value;
