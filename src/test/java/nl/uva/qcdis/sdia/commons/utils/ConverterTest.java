@@ -50,6 +50,7 @@ public class ConverterTest {
 
     /**
      * Test of decryptString method, of class Converter.
+     * @throws java.lang.Exception
      */
     @Test
     public void testEncryptDecryptString() throws Exception {

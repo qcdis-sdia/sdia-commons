@@ -186,8 +186,6 @@ public class Converter {
         Token token = Token.generate(key, contents);
         return token.serialise();
     }
-    
-    
 
     public static String decryptString(String contents, String secret) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
         Key key = new Key(secret);
