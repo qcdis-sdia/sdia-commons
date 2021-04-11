@@ -56,7 +56,8 @@ public class ConverterTest {
     public void testEncryptDecryptString() throws Exception {
         System.out.println("decryptString");
         String contents = "this is very important information";
-        String secret = "sn7M5MwhUDi7GviSU-0YtNDpgXlKvA4NYHGKBvzToas=";//"2vSfzOCCIj6__YYWiJDaY1n0CcwUCsPIDJVTkILDhc93JgYrYhUrqSAFNDdnB9XlwJgqEzLbxFU_YZ2PBwKX2Q==";//Key.generateKey().serialise();
+//        String secret = Key.generateKey().serialise();
+        String secret = "5Y-ABHuVBjls_Iui4faIU1Yoc2FRf5cjpQU5x5FJ1fI=";//"2vSfzOCCIj6__YYWiJDaY1n0CcwUCsPIDJVTkILDhc93JgYrYhUrqSAFNDdnB9XlwJgqEzLbxFU_YZ2PBwKX2Q==";//Key.generateKey().serialise();
         String expResult = contents;
         String enc = Converter.encryptString(contents, secret);
         System.out.println("Encrypted String: " + enc);
