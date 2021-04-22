@@ -49,6 +49,10 @@ public class Credential {
     @JsonProperty("keys")
     @Valid
     private Map<String, String> keys = null;
+    
+    @JsonProperty("extra_properties")
+    @Valid
+    private Map<String, String> extraProperties = null;
 
     @JsonProperty("user")
     private String user = null;
@@ -209,6 +213,28 @@ public class Credential {
         this.token = token;
     }
 
+    public Credential extraProperties(Map<String, String> keys) {
+        this.extraProperties = extraProperties;
+        return this;
+    }
+
+
+    /**
+     * Get keys
+     *
+     * @return keys
+     *
+     */
+    @ApiModelProperty(value = "")
+
+    public Map<String, String> getExtraProperties() {
+        return extraProperties;
+    }
+
+    public void setExtraProperties(Map<String, String> extraProperties) {
+        this.extraProperties = extraProperties;
+    }
+    
     public Credential keys(Map<String, String> keys) {
         this.keys = keys;
         return this;
@@ -236,7 +262,7 @@ public class Credential {
 
     public void setKeys(Map<String, String> keys) {
         this.keys = keys;
-    }
+    }    
 
     public Credential user(String user) {
         this.user = user;
@@ -293,6 +319,7 @@ public class Credential {
                 && Objects.equals(this.tokenType, credentials.tokenType)
                 && Objects.equals(this.token, credentials.token)
                 && Objects.equals(this.keys, credentials.keys)
+                && Objects.equals(this.extraProperties, credentials.extraProperties)
                 && Objects.equals(this.user, credentials.user)
                 && Objects.equals(this.identityProvider, credentials.identityProvider)
                 && Objects.equals(this.authType, credentials.authType)
@@ -316,6 +343,7 @@ public class Credential {
         sb.append("    tokenType: ").append(toIndentedString(tokenType)).append("\n");
         sb.append("    token: ").append(toIndentedString(token)).append("\n");
         sb.append("    keys: ").append(toIndentedString(keys)).append("\n");
+        sb.append("    extraProperties: ").append(toIndentedString(extraProperties)).append("\n");
         sb.append("    user: ").append(toIndentedString(user)).append("\n");
         sb.append("    identityProvider: ").append(toIndentedString(identityProvider)).append("\n");
         sb.append("    authType: ").append(toIndentedString(authType)).append("\n");
