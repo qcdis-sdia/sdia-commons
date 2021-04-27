@@ -35,7 +35,7 @@ public class Constants {
     public static final String CLOUD_STORM_FILES_ZIP_SUFIX = "cloudStromFiles.zip";
 
     public static enum NODE_STATES {
-        DELETED, STARTED, STOPPED, H_SCALED, V_SCALED, CONFIGURED, RUNNING, FAILED
+        DELETED, STARTED, STOPPED, H_SCALED, V_SCALED, CONFIGURED, RUNNING, FAILED, UNDEFINED
     }
 
 }
